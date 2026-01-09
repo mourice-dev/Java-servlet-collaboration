@@ -6,6 +6,24 @@
     
     <display-name>Student Course Registration</display-name>
     
+    <servlet>
+        <servlet-name>StudentInputServlet</servlet-name>
+        <servlet-class>com.example.servlet.StudentInputServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentInputServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudentDisplayServlet</servlet-name>
+        <servlet-class>com.example.servlet.StudentDisplayServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StudentDisplayServlet</servlet-name>
+        <url-pattern>/list</url-pattern>
+    </servlet-mapping>
+
     <!-- Welcome file list -->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
