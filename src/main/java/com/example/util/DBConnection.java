@@ -6,13 +6,30 @@ import java.sql.SQLException;
 
 public class DBConnection {
     // NOTE: Update these with your specific database credentials
-    private static final String URL = "jdbc:mysql://localhost:3306/student_db?useSSL=false&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "password"; // Change me!
+    private static final String URL = "jdbc:h2:mem:student_db;DB_CLOSE_DELAY=-1";
+    private static final String USER = "sa";
+    private static final String PASSWORD = "";
 
     static {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.h2.Driver");
+            // Initialize Database Schema
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 java.sql.Statement stmt = conn.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS students (" +
+                        "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                        "first_name VARCHAR(50) NOT NULL, " +
+                        "last_name VARCHAR(50) NOT NULL, " +
+                        "email VARCHAR(100) NOT NULL, " +
+                        "course VARCHAR(100) NOT NULL, " +
+                        "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                        ")";
+                stmt.execute(sql);
+                System.out.println("H2 Database initialized successfully.");
+            } catch (SQLException e) {
+                System.err.println("Error initializing H2 database: " + e.getMessage());
+                e.printStackTrace();
+            }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
